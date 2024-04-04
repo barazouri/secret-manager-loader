@@ -1,9 +1,9 @@
 import {
   GetSecretValueCommand,
   SecretsManagerClient,
-} from "@aws-sdk/client-secrets-manager";
-import { StringDictionary } from "..";
-import { AbstractSecretClient } from "./abstract-secret-client";
+} from '@aws-sdk/client-secrets-manager';
+import { StringDictionary } from '..';
+import { AbstractSecretClient } from './abstract-secret-client';
 
 export class AwsSecretClient extends AbstractSecretClient {
   client: SecretsManagerClient;
@@ -17,10 +17,10 @@ export class AwsSecretClient extends AbstractSecretClient {
     const response = await this.client.send(
       new GetSecretValueCommand({
         SecretId: secretName,
-      })
+      }),
     );
     if (!response.SecretString) {
-      throw new Error("SecretString is not defined");
+      throw new Error('SecretString is not defined');
     }
     return response.SecretString;
   }

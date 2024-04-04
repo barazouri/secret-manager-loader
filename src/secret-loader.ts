@@ -1,5 +1,5 @@
-import { AbstractSecretClient } from "./clients/abstract-secret-client";
-import { ConfigManager } from "./types";
+import { AbstractSecretClient } from './clients/abstract-secret-client';
+import { ConfigManager } from './types';
 
 export class SecretLoader {
   private secretClient: AbstractSecretClient;
@@ -10,7 +10,7 @@ export class SecretLoader {
     try {
       for (const secret of config.secretManagers) {
         const secrets = await this.secretClient.getSecretValueAsObject(
-          secret.secret_name
+          secret.secret_name,
         );
         for (const value of secret.values) {
           process.env[value.envName] = secrets[value.secretKey];
