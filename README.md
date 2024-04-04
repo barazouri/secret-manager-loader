@@ -1,4 +1,4 @@
-# Project Name
+# Secret Manager Loader 2 Environment Variables
 
 Secret Manager Loader
 
