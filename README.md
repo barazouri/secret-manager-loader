@@ -11,7 +11,7 @@ This project provides a set of utilities for loading secrets from a secret manag
 To install this package, you can use npm :
 
 ```bash
-npm install secret-manager-loader
+npm i secret-manager-loader-2-env
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ import {
   AWSSecretClient,
   SecretClientFactory,
   SecretLoader,
-} from "secret-manager-loader";
+} from 'secret-manager-loader';
 ```
 
 ### 3. Usage Examples
@@ -45,7 +45,7 @@ Here are some basic usage examples for the exported classes and functions:
 #### Creating an AWS Secret Client
 
 ```javascript
-import { AWSSecretClient } from "secret-manager-loader";
+import { AWSSecretClient } from 'secret-manager-loader';
 const awsSecretClient = new AWSSecretClient();
 ```
 
