@@ -15,6 +15,8 @@ You can install this package as a development dependency in your project by runn
 npm i --save-dev secret-manager-loader-2-env
 ```
 
+test
+
 ## Usage
 
 ### 1. Secret Clients
