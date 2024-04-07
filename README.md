@@ -8,10 +8,11 @@ This project provides a set of utilities for loading secrets from a secret manag
 
 ## Installation
 
-To install this package, you can use npm :
+This package is designed to be used in your development environment.
+You can install this package as a development dependency in your project by running the following command in your terminal:
 
 ```bash
-npm i secret-manager-loader-2-env
+npm i --save-dev secret-manager-loader-2-env
 ```
 
 ## Usage
@@ -80,8 +81,9 @@ const myConfigManager: ConfigManager = {
   ],
 };
 
+// if(process.env.NODE_ENV === "local-development")
 SecretLoader.loadKeys(config).then((keys) => {
-  // Here you can run your local server, make sure to minimize hot reload using webpcak
+  // Here you can run your local server, make sure to minimize hot reload using webpcak to reduce secret manager cost
 });
 ```
 
