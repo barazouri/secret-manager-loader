@@ -38,7 +38,7 @@ import {
   AWSSecretClient,
   SecretClientFactory,
   SecretLoader,
-} from 'secret-manager-loader';
+} from 'secret-manager-loader-2-env';
 ```
 
 ### 3. Usage Examples
@@ -48,16 +48,16 @@ Here are some basic usage examples for the exported classes and functions:
 #### Creating an AWS Secret Client
 
 ```javascript
-import { AWSSecretClient } from 'secret-manager-loader';
+import { AWSSecretClient } from 'secret-manager-loader-2-env';
 const awsSecretClient = new AWSSecretClient();
 ```
 
 #### Loading Secrets
 
 ```javascript
-import { SecretLoader } from "secret-manager-loader";
+import { SecretLoader } from "secret-manager-loader-2-env";
 // Example configuration
-import { ConfigManager } from "secret-manager-loader";
+import { ConfigManager } from "secret-manager-loader-2-env";
 
 // Example usage
 const myConfigManager: ConfigManager = {
