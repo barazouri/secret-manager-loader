@@ -61,7 +61,7 @@ import { ConfigManager } from "secret-manager-loader-2-env";
 
 // Example usage
 const myConfigManager: ConfigManager = {
-  secret_managers: [
+  secretManagers: [
     {
       secretName: "mySecret1",
       values: [

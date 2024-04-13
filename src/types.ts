@@ -3,7 +3,7 @@ export interface StringDictionary {
 }
 
 export interface SecretManager {
-  secret_name: string;
+  secretName: string;
   values: { envName: string; secretKey: string }[];
 }
 export interface ConfigManager {
