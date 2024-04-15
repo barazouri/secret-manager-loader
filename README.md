@@ -24,7 +24,7 @@ test
 This package exports several types and classes related to secret management:
 
 - AbstractSecretClient: An abstract class representing a generic secret client, you can extend it to implement your own client.
-- AWSSecretClient: A class for interacting with AWS Secrets Manager, you need to use aws sso login to use it.
+- AWSSecretClient: A class for interacting with AWS Secrets Manager, you need to use aws sso login with default to use it.
 - SecretClientFactory: A factory class for creating instances of secret clients based on configuration.
 - SecretLoader: A utility function for loading secrets using a secret client.
 
