@@ -87,7 +87,42 @@ const myConfigManager: ConfigManager = {
 // if(process.env.NODE_ENV === "local-development")
 SecretLoader.loadKeys(config).then((keys) => {
   // Here you can run your local server, make sure to minimize hot reload using webpcak to reduce secret manager cost
+  // You can run this function in the imports of the webpack.config.js
 });
+```
+
+## Webpack example
+```javascript
+/* eslint-disable @typescript-eslint/no-var-requires */
+const nodeExternals = require('webpack-node-externals');
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+require('ts-node').register();
+//Load all secrets to env variables
+require('./src/config/secrets-loader.ts');
+
+module.exports = function (options, webpack) {
+  return {
+    ...options,
+    entry: [options.entry],
+    externals: [nodeExternals()],
+    plugins: [
+      ...options.plugins,
+      new webpack.WatchIgnorePlugin({
+        paths: [/\.js$/, /\.d\.ts$/],
+      }),
+      new RunScriptWebpackPlugin({
+        name: options.output.filename,
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/templates', to: 'templates' }, // adjust 'src/templates' if your path is different
+        ],
+      }),
+    ],
+    devtool: 'source-map',
+  };
+};
 ```
 
 ## Contributing
