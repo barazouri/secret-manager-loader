@@ -98,7 +98,8 @@ const nodeExternals = require('webpack-node-externals');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 require('ts-node').register();
-//Load all secrets to env variables
+
+//This file is running the function to load all the secrets using the environment config
 require('./src/config/secrets-loader.ts');
 
 module.exports = function (options, webpack) {
