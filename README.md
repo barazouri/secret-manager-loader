@@ -44,24 +44,13 @@ import {
 
 ### 3. Usage Examples
 
-Here are some basic usage examples for the exported classes and functions:
-
-#### Creating an AWS Secret Client
-
-```javascript
-import { AWSSecretClient } from 'secret-manager-loader-2-env';
-const awsSecretClient = new AWSSecretClient();
-```
-
-#### Loading Secrets
+#### Create src/config directory with 3 files inside
+src/config/local-development.ts
 
 ```javascript
-import { SecretLoader } from "secret-manager-loader-2-env";
-// Example configuration
-import { ConfigManager } from "secret-manager-loader-2-env";
+import { ConfigManager } from 'secret-manager-loader-2-env';
 
-// Example usage
-const myConfigManager: ConfigManager = {
+export const Config: ConfigManager = {
   secretManagers: [
     {
       secretName: "mySecret1",
@@ -84,23 +73,77 @@ const myConfigManager: ConfigManager = {
   ],
 };
 
-// if(process.env.NODE_ENV === "local-development")
-SecretLoader.loadKeys(config).then((keys) => {
-  // Here you can run your local server, make sure to minimize hot reload using webpcak to reduce secret manager cost
-  // You can run this function in the imports of the webpack.config.js
-});
+```
+src/config/staging.ts
+```javascript
+import { ConfigManager } from 'secret-manager-loader-2-env';
+
+export const Config: ConfigManager = {
+  secretManagers: [
+    {
+      secretName: "mySecret1",
+      values: [
+        { envName: "ENV_1", secretKey: "secretKey1" },
+        { envName: "ENV_2", secretKey: "secretKey2" },
+      ],
+    },
+    {
+      secretName: "mySecret2",
+      values: [
+        { envName: "ENV_3", secretKey: "secretKey3" },
+        { envName: "ENV_4", secretKey: "secretKey4" },
+      ],
+    },
+  ],
+  environmentVariables: [
+    { envName: "ENV_1", envValue: "value1" },
+    { envName: "ENV_2", envValue: "value2" },
+  ],
+};
+```
+src/config/secrets-loader.ts
+```javascript
+import { Config as LocalConfig } from './local-development';
+import { Config as StagingConfig } from './staging';
+import { loadSecretsAWS } from 'secret-manager-loader-2-env';
+
+const loadSecrets = async () => {
+  if (
+    process.env.NODE_ENV === 'local-development' ||
+    process.env.NODE_ENV === 'local-staging'
+  ) {
+    const config = getConfigByEnv();
+
+    console.log(`Loading keys for ${process.env.NODE_ENV}`);
+    await loadSecretsAWS(config);
+  }
+};
+
+const getConfigByEnv = () => {
+  let Config;
+  if (process.env.NODE_ENV === 'local-development') {
+    Config = LocalConfig;
+  } else if (process.env.NODE_ENV === 'local-staging') {
+    Config = StagingConfig;
+  } else {
+    throw new Error('NODE_ENV is not set');
+  }
+  return Config;
+};
+loadSecrets();
+
 ```
 
-## Webpack example
+#### Create webpack file in the root dir
+webpack.config.js
 ```javascript
 /* eslint-disable @typescript-eslint/no-var-requires */
 const nodeExternals = require('webpack-node-externals');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 require('ts-node').register();
-
-//This file is running the function to load all the secrets using the environment config
-require('./src/config/secrets-loader.ts');
+//Load all secrets to env variables
+require('./src/config/secrets-loader.ts');  //This line loading all the secrets from the secret manager
 
 module.exports = function (options, webpack) {
   return {
@@ -115,16 +158,23 @@ module.exports = function (options, webpack) {
       new RunScriptWebpackPlugin({
         name: options.output.filename,
       }),
-      new CopyPlugin({
-        patterns: [
-          { from: 'src/templates', to: 'templates' }, // adjust 'src/templates' if your path is different
-        ],
-      }),
     ],
     devtool: 'source-map',
   };
 };
+
 ```
+
+#### Use this command to run the service in package.json
+```
+These are example for commands to nest services, but you can changes your conmmands to adjust you service if you are not using nestjs.
+
+
+"dev": "NODE_ENV=local-development nest build --webpack --webpackPath webpack.config.js --watch",
+"dev-stg": "NODE_ENV=local-staging nest build --webpack --webpackPath webpack.config.js --watch",
+
+```
+
 
 ## Contributing
 
