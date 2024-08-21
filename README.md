@@ -53,17 +53,17 @@ import { ConfigManager } from 'secret-manager-loader-2-env';
 export const Config: ConfigManager = {
   secretManagers: [
     {
-      secretName: "mySecret1",
+      secretName: "SECRET_NAME_1",
       values: [
-        { envName: "ENV_1", secretKey: "secretKey1" },
-        { envName: "ENV_2", secretKey: "secretKey2" },
+        { envName: "MONGO_PASS", secretKey: "MONGO_PASS_SECRET_ROW_NAME" },
+        { envName: "AWS_KMS_SECRET_ACCESS_KEY", secretKey: "AWS_KMS_SECRET_ACCESS_KEY_SECRET_ROW_NAME" },
       ],
     },
     {
-      secretName: "mySecret2",
+      secretName: "SECRET_NAME_2",
       values: [
-        { envName: "ENV_3", secretKey: "secretKey3" },
-        { envName: "ENV_4", secretKey: "secretKey4" },
+        { envName: "REDIS_HOST", secretKey: "localhost" },
+        { envName: "REDIS_PORT", secretKey: "6379" },
       ],
     },
   ],

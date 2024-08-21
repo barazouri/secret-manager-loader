@@ -1,6 +1,6 @@
 {
   "name": "secret-manager-loader-2-env",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Open source to load secret manager secrets to environment variables using config file ",
   "main": "dist/index.js",
   "source": "./src/index.ts",
