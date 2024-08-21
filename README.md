@@ -53,17 +53,17 @@ import { ConfigManager } from 'secret-manager-loader-2-env';
 export const Config: ConfigManager = {
   secretManagers: [
     {
-      secretName: "mySecret1",
+      secretName: "SECRET_NAME_1",
       values: [
-        { envName: "ENV_1", secretKey: "secretKey1" },
-        { envName: "ENV_2", secretKey: "secretKey2" },
+        { envName: "MONGO_PASS", secretKey: "MONGO_PASS_SECRET_ROW_NAME" },
+        { envName: "AWS_KMS_SECRET_ACCESS_KEY", secretKey: "AWS_KMS_SECRET_ACCESS_KEY_SECRET_ROW_NAME" },
       ],
     },
     {
-      secretName: "mySecret2",
+      secretName: "SECRET_NAME_2",
       values: [
-        { envName: "ENV_3", secretKey: "secretKey3" },
-        { envName: "ENV_4", secretKey: "secretKey4" },
+        { envName: "REDIS_HOST", secretKey: "localhost" },
+        { envName: "REDIS_PORT", secretKey: "6379" },
       ],
     },
   ],
@@ -81,23 +81,22 @@ import { ConfigManager } from 'secret-manager-loader-2-env';
 export const Config: ConfigManager = {
   secretManagers: [
     {
-      secretName: "mySecret1",
+      secretName: "SECRET_NAME_1",
       values: [
-        { envName: "ENV_1", secretKey: "secretKey1" },
-        { envName: "ENV_2", secretKey: "secretKey2" },
+        { envName: "MONGO_PASS", secretKey: "MONGO_PASS_SECRET_ROW_NAME" },
+        { envName: "AWS_KMS_SECRET_ACCESS_KEY", secretKey: "AWS_KMS_SECRET_ACCESS_KEY_SECRET_ROW_NAME" },
       ],
     },
     {
-      secretName: "mySecret2",
+      secretName: "SECRET_NAME_2",
       values: [
-        { envName: "ENV_3", secretKey: "secretKey3" },
-        { envName: "ENV_4", secretKey: "secretKey4" },
+        { envName: "ENV_NAME", secretKey: "SECRET_ROW_NAME" },
       ],
     },
   ],
   environmentVariables: [
-    { envName: "ENV_1", envValue: "value1" },
-    { envName: "ENV_2", envValue: "value2" },
+    { envName: "REDIS_HOST", envValue: "localhost" },
+    { envName: "REDIS_PORT", envValue: "6379" },
   ],
 };
 ```
@@ -109,8 +108,7 @@ import { loadSecretsAWS } from 'secret-manager-loader-2-env';
 
 const loadSecrets = async () => {
   if (
-    process.env.NODE_ENV === 'local-development' ||
-    process.env.NODE_ENV === 'local-staging'
+    process.env.NODE_ENV === 'local-development'
   ) {
     const config = getConfigByEnv();
 
@@ -123,9 +121,11 @@ const getConfigByEnv = () => {
   let Config;
   if (process.env.NODE_ENV === 'local-development') {
     Config = LocalConfig;
-  } else if (process.env.NODE_ENV === 'local-staging') {
+  } 
+  else if (process.env.NODE_ENV === 'local-staging') {
     Config = StagingConfig;
-  } else {
+  } 
+  else {
     throw new Error('NODE_ENV is not set');
   }
   return Config;
